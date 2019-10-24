@@ -1,0 +1,37 @@
+BoxLayout:
+    orientation: 'vertical'
+    padding: '10dp'
+    Image:
+        size_hint_y: 1.2
+        source: 'led_circle_green.png'  # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
+    Slider:
+        size_hint_y: 8
+        id: bpm_slider
+        orientation: 'vertical'
+        min: 50
+        max: 300
+        value: 60
+        on_value: app.mcg.shared_bpm = int(bpm_slider.value)
+    BoxLayout:
+        size_hint_y:
+        Label:
+            text: 'BPM:'
+        TextInput
+            text: str(int(bpm_slider.value))
+    Button:
+        text: 'Tap'
+    Label:
+        text: 'MIDI Chain 1'
+    Spinner:
+        id: port_1
+        text: 'Midi Out 1'
+        values: app.midi_ports
+        on_text:
+            app.mcg.launch_process(port_1.text)
+    Label:
+        text: 'MIDI Chain 2'
+    Button:
+        text: '60 bpm'
+
+
+
