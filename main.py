@@ -37,7 +37,7 @@ class MidiClockGen:
         self.midi_process.start()
 
     def end_process(self):
-        self._run_code = False
+        self._run_code.value = False
         self.midi_process.join()
         self.midi_process.close()
 
@@ -54,4 +54,5 @@ class MidiClockApp(App):
         self.mcg.end_process()
 
 
-MidiClockApp().run()
+if __name__ == '__main__':
+    MidiClockApp().run()

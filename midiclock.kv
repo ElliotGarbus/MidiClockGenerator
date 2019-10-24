@@ -8,10 +8,10 @@ BoxLayout:
         size_hint_y: 8
         id: bpm_slider
         orientation: 'vertical'
-        min: 50
-        max: 300
+        min: 47
+        max: 1000
         value: 60
-        on_value: app.mcg.shared_bpm = int(bpm_slider.value)
+        on_value: app.mcg.shared_bpm.value = int(bpm_slider.value)
     BoxLayout:
         size_hint_y:
         Label:
