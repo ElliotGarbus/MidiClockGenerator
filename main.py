@@ -29,8 +29,16 @@ class MidiClockGen:
             t2 = perf_counter()
             while (t2 - t1) < pulse_rate:
                 t2 = perf_counter()
+        # midi_output.close()
 
     def launch_process(self, out_port):
+        app = App.get_running_app()
+        if self.midi_process:  # if the process exists, close prior to creating a new one
+            self.end_process()
+            self.midi_process = None
+            self._run_code.value = 1
+        else:                  # if this is the first time, start flashing the panel led
+            app.flash_led_on(None)
         self.midi_process = Process(target=self._midi_clock_generator, args=(out_port,
                                                                              self.shared_bpm,
                                                                              self._run_code))
