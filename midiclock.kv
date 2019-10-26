@@ -2,8 +2,9 @@ BoxLayout:
     orientation: 'vertical'
     padding: '10dp'
     Image:
-        size_hint_y: 1.2
-        source: 'led_circle_green.png'  # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
+        size_hint_y: 2
+        source: '18272-green-led-on-labview-style-design.png'  if app.panel_led else '43982-green-led-off-labview-style-clipart.png'
+        # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
     Slider:
         size_hint_y: 8
         id: bpm_slider
@@ -11,13 +12,15 @@ BoxLayout:
         min: 47
         max: 1000
         value: 60
-        on_value: app.mcg.shared_bpm.value = int(bpm_slider.value)
+        on_value:
+            app.mcg.shared_bpm.value = int(bpm_slider.value)
     BoxLayout:
         size_hint_y:
         Label:
             text: 'BPM:'
         TextInput
             text: str(int(bpm_slider.value))
+            multiline: False
     Button:
         text: 'Tap'
     Label:
@@ -28,10 +31,11 @@ BoxLayout:
         values: app.midi_ports
         on_text:
             app.mcg.launch_process(port_1.text)
+            app.flash_led_on(None)
     Label:
         text: 'MIDI Chain 2'
     Button:
-        text: '60 bpm'
+        text: 'Midi Out 2 TBD'
 
 
 
