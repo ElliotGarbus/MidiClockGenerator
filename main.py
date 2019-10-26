@@ -13,21 +13,14 @@ import mido.backends.rtmidi  # required for pyinstaller to create an exe
 class MidiClockGen:
     def __init__(self):
         self.shared_bpm = Value('i', 60)
-        self.shared_led = Value('i', 0)  # effectively a boolean to flash the gui led
         self._run_code = Value('i', 1)
         self.midi_process = None
 
     @staticmethod
-    def _midi_clock_generator(out_port, bpm, run, led):
+    def _midi_clock_generator(out_port, bpm, run):
         midi_output = mido.open_output(out_port)
         clock_tick = mido.Message('clock')
-        tick = 0
         while run.value:
-            if tick == 0:
-                led.value = 1
-            if tick == 6:
-                led.value = 0
-            tick = (tick + 1) % 24
             pulse_rate = 60.0 / (bpm.value * 24)
             midi_output.send(clock_tick)
             t1 = perf_counter()
@@ -40,8 +33,7 @@ class MidiClockGen:
     def launch_process(self, out_port):
         self.midi_process = Process(target=self._midi_clock_generator, args=(out_port,
                                                                              self.shared_bpm,
-                                                                             self._run_code,
-                                                                             self.shared_led))
+                                                                             self._run_code))
         self.midi_process.start()
 
     def end_process(self):
@@ -55,9 +47,6 @@ class MidiClockApp(App):
     mcg = MidiClockGen()
     panel_led = BooleanProperty(False)
 
-    def check_led(self, dt):
-        self.panel_led = bool(self.mcg.shared_led.value)
-
     def flash_led_off(self, dt):
         self.panel_led = self.root.ids.bpm_slider.value >= 667
         rate = (60 / int(self.root.ids.bpm_slider.value)) * .75
@@ -67,8 +56,6 @@ class MidiClockApp(App):
         self.panel_led = True
         rate = (60 / int(self.root.ids.bpm_slider.value)) * .25
         Clock.schedule_once(self.flash_led_off, rate)
-
-
 
     def on_start(self):
         self.midi_ports = mido.get_output_names()
