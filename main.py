@@ -59,20 +59,13 @@ class MidiClockApp(App):
         self.panel_led = bool(self.mcg.shared_led.value)
 
     def flash_led_off(self, dt):
-        if self.root.ids.bpm_slider.value >= 667:
-            self.panel_led = True
-            rate = 2
-        else:
-            self.panel_led = False
-            rate = (60 / int(self.root.ids.bpm_slider.value)) * .75
+        self.panel_led = self.root.ids.bpm_slider.value >= 667
+        rate = (60 / int(self.root.ids.bpm_slider.value)) * .75
         Clock.schedule_once(self.flash_led_on, rate)
 
     def flash_led_on(self, dt):
         self.panel_led = True
-        if self.root.ids.bpm_slider.value >= 667:
-            rate = 2
-        else:
-            rate = (60 / int(self.root.ids.bpm_slider.value)) * .25
+        rate = (60 / int(self.root.ids.bpm_slider.value)) * .25
         Clock.schedule_once(self.flash_led_off, rate)
 
 
