@@ -32,13 +32,12 @@ class MidiClockGen:
         # midi_output.close()
 
     def launch_process(self, out_port):
-        app = App.get_running_app()
         if self.midi_process:  # if the process exists, close prior to creating a new one
             self.end_process()
-            self.midi_process = None
-            self._run_code.value = 1
         else:                  # if this is the first time, start flashing the panel led
+            app = App.get_running_app()
             app.flash_led_on(None)
+        self._run_code.value = 1
         self.midi_process = Process(target=self._midi_clock_generator, args=(out_port,
                                                                              self.shared_bpm,
                                                                              self._run_code))
@@ -67,7 +66,6 @@ class MidiClockApp(App):
 
     def on_start(self):
         self.midi_ports = mido.get_output_names()
-        # Clock.schedule_interval(self.check_led, .015)
 
     def on_stop(self):
         self.mcg.end_process()

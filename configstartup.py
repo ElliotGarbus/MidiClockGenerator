@@ -10,7 +10,7 @@ Config.set('graphics'...) are used to set the size of the main window.
 """
 # Default window size and position, also used to set minimum window size
 window_width = 250
-window_height = 500
+window_height = 1000
 window_top = 100
 window_left = 100
 
@@ -31,9 +31,4 @@ else:
     Config.set('graphics', 'left', window_left)
 Config.set('kivy', 'exit_on_escape', 0)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-Config.set('kivy', 'kivy_clock', 'interrupt')
 
-# this code is not longer required as of kivy 1.11.1, imports removed
-# if platform == 'win':
-#     myappid = device_name  # arbitrary string
-#     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
