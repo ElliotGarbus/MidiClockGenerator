@@ -11,7 +11,7 @@ BoxLayout:
         id: bpm_slider
         orientation: 'vertical'
         min: 47
-        max: 1000
+        max: 500
         value: 60
         on_value:
             app.mcg.shared_bpm.value = int(bpm_slider.value)
@@ -24,13 +24,20 @@ BoxLayout:
             text: '47-500'
             font_size: fs
     BoxLayout:
+        id: box
         Label:
             text: 'BPM:'
             font_size: fs
-        TextInput
-            text: str(int(bpm_slider.value))
-            multiline: False
-            font_size: fs
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+            IntegerInput:
+                size_hint_y: None
+                text: str(int(bpm_slider.value))
+                multiline: False
+                font_size: fs
+                height: self.minimum_height
+            Label:
 
     Spinner:
         id: port_1

@@ -4,10 +4,26 @@ from multiprocessing import Process, Value
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ListProperty, BooleanProperty
+from kivy.uix.textinput import TextInput
 # from kivy.logger import Logger
 
 import mido
 import mido.backends.rtmidi  # required for pyinstaller to create an exe
+
+
+class IntegerInput(TextInput):
+    def insert_text(self, substring, from_undo=False):
+        s = substring if substring.isdigit() else ''
+        return super().insert_text(s, from_undo=from_undo)
+
+    def on_text_validate(self):  # todo: scale max value to range
+        if int(self.text) < 47:
+            self.text = '47'
+        if int(self.text) > 6000:
+            self.text = '6000'
+        app = App.get_running_app()
+        app.root.ids.bpm_slider.value = int(self.text)
+        return super().on_text_validate()
 
 
 class MidiClockGen:
@@ -29,7 +45,6 @@ class MidiClockGen:
             t2 = perf_counter()
             while (t2 - t1) < pulse_rate:
                 t2 = perf_counter()
-        # midi_output.close()
 
     def launch_process(self, out_port):
         if self.midi_process:  # if the process exists, close prior to creating a new one
