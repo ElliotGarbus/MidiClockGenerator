@@ -7,22 +7,22 @@ BoxLayout:
         source: '18272-green-led-on-labview-style-design.png'  if app.panel_led else '43982-green-led-off-labview-style-clipart.png'
         # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
     Slider:
-        size_hint_y: 10
         id: bpm_slider
+        size_hint_y: 10
         orientation: 'vertical'
         min: 47
         max: 500
         value: 60
-        on_value:
-            app.mcg.shared_bpm.value = int(bpm_slider.value)
+        on_value: app.mcg.shared_bpm.value = int(bpm_slider.value)
     BoxLayout:
         Label:
             text: 'Range:'
             font_size: fs
-        Spinner:
+        RangeSpinner:
             values: ['47-500', '400-1000','1200', '1500', '2000', '3000', '6000']
             text: '47-500'
             font_size: fs
+            on_text: self.set_min_max()
     BoxLayout:
         id: box
         Label:
@@ -38,7 +38,6 @@ BoxLayout:
                 font_size: fs
                 height: self.minimum_height
             Label:
-
     Spinner:
         id: port_1
         text: 'Select Midi Out Device'

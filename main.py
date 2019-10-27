@@ -5,6 +5,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ListProperty, BooleanProperty
 from kivy.uix.textinput import TextInput
+from kivy.uix.spinner import Spinner
 # from kivy.logger import Logger
 
 import mido
@@ -24,6 +25,21 @@ class IntegerInput(TextInput):
         app = App.get_running_app()
         app.root.ids.bpm_slider.value = int(self.text)
         return super().on_text_validate()
+
+
+class RangeSpinner(Spinner):
+    pass
+    range = {'47-500': (47, 500), '400-1000': (400, 1000), '1200': (47, 6000),
+             '1500': (47, 6000), '2000': (47, 6000), '3000': (47, 6000), '6000': (47, 6000)}
+
+    def set_min_max(self):
+        p = App.get_running_app().root.ids.bpm_slider
+        p.min, p.max = self.range[self.text]
+        if self.text in ['1200', '1500', '2000', '3000', '6000']:
+            p.value = int(self.text)
+            p.disabled = True
+        else:
+            p.disabled = False
 
 
 class MidiClockGen:
