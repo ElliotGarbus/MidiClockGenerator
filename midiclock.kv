@@ -44,6 +44,10 @@ BoxLayout:
         text: 'Select Midi Out Device'
         values: app.midi_ports
         font_size: fs
+        shorten: True
+        text_size: self.size
+        valign: 'center'
+        halign: 'center'
         on_text: app.mcg.launch_process(port_1.text)
     Button:
         text: 'Tap'
