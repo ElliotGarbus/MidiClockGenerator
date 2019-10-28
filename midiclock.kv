@@ -13,7 +13,8 @@ BoxLayout:
         min: 47
         max: 500
         value: 60
-        on_value: app.mcg.shared_bpm.value = int(bpm_slider.value)
+        on_value:
+            app.mcg.shared_bpm.value = int(bpm_slider.value)
     BoxLayout:
         Label:
             text: 'Range:'
@@ -43,8 +44,7 @@ BoxLayout:
         text: 'Select Midi Out Device'
         values: app.midi_ports
         font_size: fs
-        on_text:
-            app.mcg.launch_process(port_1.text)
+        on_text: app.mcg.launch_process(port_1.text)
     Button:
         text: 'Tap'
         font_size: fs
