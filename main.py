@@ -1,3 +1,46 @@
+from time import perf_counter, sleep
+import mido
+import mido.backends.rtmidi  # required for pyinstaller to create an exe
+
+
+class MidiClockGen:
+    def __init__(self):
+        self.shared_bpm = Value('i', 60)
+        self._run_code = Value('i', 1)
+        self._midi_process = None
+
+    @staticmethod
+    def _midi_clock_generator(out_port, bpm, run):
+        # print(f'__name__: {__name__}')
+        midi_output = mido.open_output(out_port)
+        clock_tick = mido.Message('clock')
+        while run.value:
+            pulse_rate = 60.0 / (bpm.value * 24)
+            midi_output.send(clock_tick)
+            t1 = perf_counter()
+            if bpm.value <= 3000:
+                sleep(pulse_rate * 0.8)
+            t2 = perf_counter()
+            while (t2 - t1) < pulse_rate:
+                t2 = perf_counter()
+
+    def launch_process(self, out_port):
+        if self._midi_process:  # if the process exists, close prior to creating a new one
+            self.end_process()
+        else:                  # if this is the first time, start flashing the panel led
+            app = App.get_running_app()
+            app.flash_led_on(None)
+        self._run_code.value = 1
+        self._midi_process = Process(target=self._midi_clock_generator, args=(out_port, self.shared_bpm,
+                                                                              self._run_code))
+        self._midi_process.start()
+
+    def end_process(self):
+        self._run_code.value = 0
+        self._midi_process.join()
+        self._midi_process.close()
+
+
 if __name__ == '__main__':
     import configstartup
     from multiprocessing import Process, Value, freeze_support
@@ -6,10 +49,6 @@ if __name__ == '__main__':
     from kivy.properties import ListProperty, BooleanProperty
     from kivy.uix.textinput import TextInput
     from kivy.uix.spinner import Spinner
-    print('completed imports')
-
-    import mido
-    import mido.backends.rtmidi  # required for pyinstaller to create an exe
 
 
     class IntegerInput(TextInput):
@@ -40,47 +79,7 @@ if __name__ == '__main__':
             else:
                 p.disabled = False
 
-import mido
-import mido.backends.rtmidi  # required for pyinstaller to create an exe
-from time import perf_counter, sleep
 
-class MidiClockGen:
-    def __init__(self):
-        self.shared_bpm = Value('i', 60)
-        self._run_code = Value('i', 1)
-        self._midi_process = None
-
-    @staticmethod
-    def _midi_clock_generator(out_port, bpm, run):
-        midi_output = mido.open_output(out_port)
-        clock_tick = mido.Message('clock')
-        while run.value:
-            pulse_rate = 60.0 / (bpm.value * 24)
-            midi_output.send(clock_tick)
-            t1 = perf_counter()
-            if bpm.value <= 3000:
-                sleep(pulse_rate * 0.8)
-            t2 = perf_counter()
-            while (t2 - t1) < pulse_rate:
-                t2 = perf_counter()
-
-    def launch_process(self, out_port):
-        if self._midi_process:  # if the process exists, close prior to creating a new one
-            self.end_process()
-        else:                  # if this is the first time, start flashing the panel led
-            app = App.get_running_app()
-            app.flash_led_on(None)
-        self._run_code.value = 1
-        self._midi_process = Process(target=self._midi_clock_generator, args=(out_port, self.shared_bpm,
-                                                                              self._run_code))
-        self._midi_process.start()
-
-    def end_process(self):
-        self._run_code.value = 0
-        self._midi_process.join()
-        self._midi_process.close()
-
-if __name__ == '__main__':
     class MidiClockApp(App):
         midi_ports = ListProperty([])
         mcg = MidiClockGen()
@@ -103,6 +102,5 @@ if __name__ == '__main__':
             self.mcg.end_process()
 
 
-if __name__ == '__main__':
-    freeze_support()
+    freeze_support()  # multiprocessor support for Pyinstaller
     MidiClockApp().run()
