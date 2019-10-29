@@ -49,9 +49,10 @@ BoxLayout:
         valign: 'center'
         halign: 'center'
         on_text: app.mcg.launch_process(port_1.text)
-    Button:
+    TapButton:
         text: 'Tap'
         font_size: fs
+        on_press: self.process_tap(bpm_slider)
 
 
 

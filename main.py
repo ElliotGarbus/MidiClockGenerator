@@ -1,4 +1,4 @@
-from time import perf_counter, sleep
+from time import perf_counter, sleep, time
 import mido
 import mido.backends.rtmidi  # required for pyinstaller to create an exe
 
@@ -49,6 +49,7 @@ if __name__ == '__main__':
     from kivy.properties import ListProperty, BooleanProperty
     from kivy.uix.textinput import TextInput
     from kivy.uix.spinner import Spinner
+    from kivy.uix.button import Button
 
 
     class IntegerInput(TextInput):
@@ -78,6 +79,29 @@ if __name__ == '__main__':
                 p.disabled = True
             else:
                 p.disabled = False
+
+
+    class TapButton(Button):
+        def __init__(self, **kwargs):
+            self.start_time = 0
+            self.tap_num = 0
+            self.beats = []
+            super().__init__(**kwargs)
+
+        def process_tap(self, bpm):
+            if self.tap_num == 0:
+                self.start_time = time()
+                self.tap_num += 1
+                print('initial tap')
+            elif self.tap_num == 1:
+                print('Next tap')
+                t1 = time()
+                self.beats.append(t1 - self.start_time)
+                self.start_time = t1
+                self.tap_num = 0
+                bpm.value = int(60/self.beats[0])
+                print(f'bpm: {bpm.value}')
+                self.beats.clear()
 
 
     class MidiClockApp(App):
