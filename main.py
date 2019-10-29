@@ -86,23 +86,46 @@ if __name__ == '__main__':
             self.start_time = 0
             self.tap_num = 0
             self.beats = []
+            self.timer = None
+            self.time_limit = 1.5
             super().__init__(**kwargs)
 
-        def process_tap(self, bpm):
+        def process_tap(self, bpm, range_select):
+            range_select.text = '47-500'
             if self.tap_num == 0:
                 self.start_time = time()
                 self.tap_num += 1
-                print('initial tap')
+                self.timer = Clock.schedule_once(self.tap_time_out, self.time_limit)
+
             elif self.tap_num == 1:
-                print('Next tap')
+                self.timer.cancel()
                 t1 = time()
                 self.beats.append(t1 - self.start_time)
                 self.start_time = t1
-                self.tap_num = 0
+                self.tap_num += 1
                 bpm.value = int(60/self.beats[0])
-                print(f'bpm: {bpm.value}')
-                self.beats.clear()
+                self.timer = Clock.schedule_once(self.tap_time_out, self.time_limit)
 
+            elif self.tap_num == 2:
+                self.timer.cancel()
+                t1 = time()
+                new_beat = t1 - self.start_time
+                self.start_time = t1
+                avg = sum(self.beats)/len(self.beats)
+                if 1.2 < avg/new_beat > 0.8:
+                    bpm.value = int(60 / new_beat)
+                    self.beats.clear()
+                    self.beats.append(new_beat)
+                else:
+                    self.beats.append(new_beat)
+                    avg = sum(self.beats) / len(self.beats)
+                    bpm.value = int(60/avg)
+                self.timer = Clock.schedule_once(self.tap_time_out, self.time_limit)
+
+        def tap_time_out(self, _):
+            self.start_time = 0
+            self.tap_num = 0
+            self.beats.clear()
 
     class MidiClockApp(App):
         midi_ports = ListProperty([])

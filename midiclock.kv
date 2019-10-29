@@ -20,6 +20,7 @@ BoxLayout:
             text: 'Range:'
             font_size: fs
         RangeSpinner:
+            id: slider_range
             values: ['47-500', '400-1000','1200', '1500', '2000', '3000', '6000']
             text: '47-500'
             font_size: fs
@@ -52,7 +53,7 @@ BoxLayout:
     TapButton:
         text: 'Tap'
         font_size: fs
-        on_press: self.process_tap(bpm_slider)
+        on_press: self.process_tap(bpm_slider, slider_range)
 
 
 
