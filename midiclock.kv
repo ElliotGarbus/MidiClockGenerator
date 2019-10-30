@@ -2,19 +2,27 @@
 BoxLayout:
     orientation: 'vertical'
     padding: '10dp'
-    Image:
-        size_hint_y: 2
-        source: '18272-green-led-on-labview-style-design.png'  if app.panel_led else '43982-green-led-off-labview-style-clipart.png'
-        # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
-    Slider:
-        id: bpm_slider
-        size_hint_y: 10
+    BoxLayout:
         orientation: 'vertical'
-        min: 47
-        max: 500
-        value: 60
-        on_value:
-            app.mcg.shared_bpm.value = int(bpm_slider.value)
+        spacing: '10dp'
+        padding: '10dp'
+        size_hint_y: 12
+        Image:
+            size_hint_y: 2
+            source: '18272-green-led-on-labview-style-design.png'  if app.panel_led else '43982-green-led-off-labview-style-clipart.png'
+            # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
+        Slider:
+            id: bpm_slider
+            size_hint_y: 10
+            orientation: 'vertical'
+            cursor_image: 'white_slider_128.png'
+            cursor_size: (96,96)
+            padding: 96/2 + 10
+            min: 47
+            max: 500
+            value: 60
+            on_value:
+                app.mcg.shared_bpm.value = int(bpm_slider.value)
     BoxLayout:
         Label:
             text: 'Range:'

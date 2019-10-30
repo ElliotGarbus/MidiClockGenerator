@@ -7,7 +7,7 @@ class MidiClockGen:
     def __init__(self):
         self.shared_bpm = Value('i', 60)
         self._run_code = Value('i', 1)
-        self._midi_process = None
+        self.midi_process = None
 
     @staticmethod
     def _midi_clock_generator(out_port, bpm, run):
@@ -25,20 +25,20 @@ class MidiClockGen:
                 t2 = perf_counter()
 
     def launch_process(self, out_port):
-        if self._midi_process:  # if the process exists, close prior to creating a new one
+        if self.midi_process:  # if the process exists, close prior to creating a new one
             self.end_process()
         else:                  # if this is the first time, start flashing the panel led
             app = App.get_running_app()
             app.flash_led_on(None)
         self._run_code.value = 1
-        self._midi_process = Process(target=self._midi_clock_generator, args=(out_port, self.shared_bpm,
+        self.midi_process = Process(target=self._midi_clock_generator, args=(out_port, self.shared_bpm,
                                                                               self._run_code))
-        self._midi_process.start()
+        self.midi_process.start()
 
     def end_process(self):
         self._run_code.value = 0
-        self._midi_process.join()
-        self._midi_process.close()
+        self.midi_process.join()
+        self.midi_process.close()
 
 
 if __name__ == '__main__':
@@ -146,7 +146,8 @@ if __name__ == '__main__':
             self.midi_ports = mido.get_output_names()
 
         def on_stop(self):
-            self.mcg.end_process()
+            if self.mcg.midi_process:
+                self.mcg.end_process()
 
 
     freeze_support()  # multiprocessor support for Pyinstaller
