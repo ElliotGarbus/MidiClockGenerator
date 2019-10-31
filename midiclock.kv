@@ -4,13 +4,14 @@ BoxLayout:
     padding: '10dp'
     Image:
         size_hint_y: 2
-        source: '18272-green-led-on-labview-style-design.png'  if app.panel_led else '43982-green-led-off-labview-style-clipart.png'
+        source: 'meris_on.png'  if app.panel_led else 'meris_off.png'
         # http://www.downloadclipart.net/browse/17442/green-led-off-labview-style-clipart
     Slider:
         id: bpm_slider
         size_hint_y: 10
         orientation: 'vertical'
         cursor_image: 'white_slider.png'
+        cursor_disabled_image: 'white_slider_disabled.png'
         cursor_size: ('96dp', '96dp')
         padding: dp(96/2 + 10)
         min: 47
