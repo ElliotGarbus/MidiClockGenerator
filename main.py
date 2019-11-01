@@ -12,7 +12,7 @@ class MidiClockGen:
 
     @staticmethod
     def _midi_clock_generator(out_port, bpm, run):
-        # print(f'__name__: {__name__}')
+        print(f'__name__: {__name__}')
         midi_output = mido.open_output(out_port)
         clock_tick = mido.Message('clock')
         while run.value:
@@ -155,8 +155,8 @@ if __name__ == '__main__':
         def build(self):
             self.title = 'MidiClock'
             self.icon = 'quarter note.png'
-            Window.minimum_width = '222dp'
-            Window.minimum_height = '650dp'
+            Window.minimum_width = '222'
+            Window.minimum_height = '650'
 
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
@@ -186,5 +186,4 @@ if __name__ == '__main__':
             self.config.write()
 
 
-    # freeze_support()  # multiprocessor support for Pyinstaller
     MidiClockApp().run()
