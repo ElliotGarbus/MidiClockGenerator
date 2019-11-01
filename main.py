@@ -1,4 +1,5 @@
 from time import perf_counter, sleep, time
+from multiprocessing import Process, Value, freeze_support
 import mido
 import mido.backends.rtmidi  # required for pyinstaller to create an exe
 
@@ -43,8 +44,8 @@ class MidiClockGen:
 
 
 if __name__ == '__main__':
+    freeze_support()  # for pyinstaller on Windows
     from configstartup import window_left, window_height, window_top, window_width
-    from multiprocessing import Process, Value, freeze_support
     from kivy.app import App
     from kivy.clock import Clock
     from kivy.core.window import Window
@@ -185,5 +186,5 @@ if __name__ == '__main__':
             self.config.write()
 
 
-    freeze_support()  # multiprocessor support for Pyinstaller
+    # freeze_support()  # multiprocessor support for Pyinstaller
     MidiClockApp().run()
