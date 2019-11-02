@@ -12,7 +12,7 @@ class MidiClockGen:
 
     @staticmethod
     def _midi_clock_generator(out_port, bpm, run):
-        print(f'__name__: {__name__}')
+        # print(f'__name__: {__name__}')
         midi_output = mido.open_output(out_port)
         clock_tick = mido.Message('clock')
         while run.value:
@@ -81,9 +81,6 @@ if __name__ == '__main__':
             p.min, p.max = self.range[self.text]
             if self.text in ['1200', '1500', '2000', '3000', '6000']:
                 p.value = int(self.text)
-                p.disabled = True
-            else:
-                p.disabled = False
 
 
     class TapButton(Button):
