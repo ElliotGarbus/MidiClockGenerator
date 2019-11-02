@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 from kivy.config import Config
-
+from kivy.utils import platform
 """
 configstartup.py is used to set graphics 
 
@@ -9,8 +9,13 @@ This code must be at the top of the 'main' executable file.
 Config.set('graphics'...) are used to set the size of the main window. 
 """
 # Default window size and position, also used to set minimum window size
-window_width = 222
-window_height = 1000
+if platform == 'macosx':
+    window_width = 175
+    window_height = 550
+else:
+    window_width = 222
+    window_height = 600
+
 window_top = 100
 window_left = 100
 

@@ -153,8 +153,8 @@ if __name__ == '__main__':
         def build(self):
             self.title = 'MidiClock'
             self.icon = 'quarter note.png'
-            Window.minimum_width = '222'
-            Window.minimum_height = '650'
+            Window.minimum_width = window_width
+            Window.minimum_height = window_height
 
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
