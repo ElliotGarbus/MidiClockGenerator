@@ -10,7 +10,7 @@ Config.set('graphics'...) are used to set the size of the main window.
 """
 # Default window size and position, also used to set minimum window size
 window_width = 222
-window_height = 1000
+window_height = 600
 window_top = 100
 window_left = 100
 
