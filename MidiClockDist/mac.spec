@@ -5,7 +5,7 @@ import os
 spec_root = os.path.abspath(SPECPATH)
 block_cipher = None
 app_name = 'MidiClock'
-mac_icon = '../quarter_note_blue_back.icns'
+mac_icon = '../qtr_blue.icns'
 
 
 a = Analysis(['../main.py'],
