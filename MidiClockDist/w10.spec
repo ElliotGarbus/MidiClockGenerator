@@ -6,7 +6,7 @@ from kivy_deps import sdl2, glew
 spec_root = os.path.abspath(SPECPATH)
 block_cipher = None
 app_name = 'MidiClock'
-win_icon = '../quarter_note_blue_back.ico'
+win_icon = '../qtr_blue.ico'
 
 a = Analysis(['../main.py'],
              pathex=[spec_root],
