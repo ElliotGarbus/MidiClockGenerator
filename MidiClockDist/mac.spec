@@ -4,18 +4,15 @@ import os
 
 spec_root = os.path.abspath(SPECPATH)
 block_cipher = None
-app_name = 'OttobitJrEdit'
-mac_icon = '../ottobit O.icns'
+app_name = 'MidiClock'
+mac_icon = '../quarter_note_blue_back.icns'
 
 
 a = Analysis(['../main.py'],
              pathex=[spec_root],
              binaries=[],
              datas=[('../*.png', '.'),
-                    ('../*.kv', '.'),
-                    ('../default_library.json', '.'),
-                    ('../MerisCommon/*.kv','./MerisCommon/'),
-                    ('../MerisCommon/*.png','./MerisCommon/')],
+                    ('../*.kv', '.')]
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=['cwd_setup_runhook_mac.py'],
