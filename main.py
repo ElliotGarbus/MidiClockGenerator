@@ -1,5 +1,5 @@
 from time import perf_counter, sleep, time
-from multiprocessing import Process, Value, freeze_support
+from multiprocessing import Process, Value, set_start_method, freeze_support
 import mido
 import mido.backends.rtmidi  # required for pyinstaller to create an exe
 
@@ -55,6 +55,7 @@ if __name__ == '__main__':
     from kivy.uix.spinner import Spinner
     from kivy.uix.button import Button
 
+    set_start_method('spawn')
 
     class IntegerInput(TextInput):
         def insert_text(self, substring, from_undo=False):
