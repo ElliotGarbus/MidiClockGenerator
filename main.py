@@ -54,9 +54,9 @@ if __name__ == '__main__':
     from kivy.uix.textinput import TextInput
     from kivy.uix.spinner import Spinner
     from kivy.uix.button import Button
-    import os.path
+    from kivy.utils import platform
 
-    set_start_method('spawn')
+    set_start_method('spawn') # required for mac prior to Python 3.8
 
     class IntegerInput(TextInput):
         def insert_text(self, substring, from_undo=False):
@@ -155,15 +155,18 @@ if __name__ == '__main__':
         def open_settings(self, *largs):
             pass
 
+        def get_application_config(self):
+            if platform == 'win':
+                s = '%(appdir)s/%(appname)s.ini'
+            else: # mac will not write into app folder
+                s = '~/.%(appname)s.ini'
+            return super().get_application_config(defaultpath=s)
+
         def build(self):
             self.title = 'MidiClock'
             self.icon = 'quarter note.png'
             Window.minimum_width = window_width
             Window.minimum_height = window_height
-            # print(self.get_application_config())
-            # print(os.path.join(self.user_data_dir, self.ini_file))
-            # self.config.read(os.path.join(self.user_data_dir, self.ini_file))
-            self.config.read('midiclock.ini')
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
 
