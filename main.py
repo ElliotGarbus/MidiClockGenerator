@@ -7,7 +7,7 @@ import mido.backends.rtmidi  # required for pyinstaller to create an exe
 class MidiClockGen:
     def __init__(self):
         self.shared_bpm = Value('i', 60)
-        self._run_code = Value('i', 1)
+        self._run_code = Value('i', 1)  # used to stop midiClock from main process
         self.midi_process = None
 
     @staticmethod
