@@ -21,7 +21,7 @@ window_left = 100
 
 # Use Python lib configparser to read .ini file prior to app startup
 parser = ConfigParser()
-found = parser.read('main.ini')  # created in main.py: build_config()
+found = parser.read('midiclock.ini')  # created in main.py: build_config()
 if found:
     Config.set('graphics', 'width', parser['Window']['width'])
     Config.set('graphics', 'height', parser['Window']['height'])
