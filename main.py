@@ -55,6 +55,7 @@ if __name__ == '__main__':
     from kivy.uix.spinner import Spinner
     from kivy.uix.button import Button
     import os.path
+
     set_start_method('spawn')
 
     class IntegerInput(TextInput):
