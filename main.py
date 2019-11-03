@@ -133,6 +133,7 @@ if __name__ == '__main__':
         midi_ports = ListProperty([])
         mcg = MidiClockGen()
         panel_led = BooleanProperty(False)
+        # use_kivy_settings = False
 
         def flash_led_off(self, dt):
             self.panel_led = self.root.ids.bpm_slider.value >= 667
@@ -150,12 +151,15 @@ if __name__ == '__main__':
             config.setdefaults('Window', {'top': window_top,
                                           'left': window_left})
 
+        def open_settings(self, *largs):
+            pass
+
         def build(self):
             self.title = 'MidiClock'
             self.icon = 'quarter note.png'
             Window.minimum_width = window_width
             Window.minimum_height = window_height
-
+            self.config.read('midiclock.ini')
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
 
