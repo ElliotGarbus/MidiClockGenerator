@@ -160,7 +160,10 @@ if __name__ == '__main__':
             self.icon = 'quarter note.png'
             Window.minimum_width = window_width
             Window.minimum_height = window_height
-            self.config.read(os.path.join(self.user_data_dir, self.ini_file))
+            # print(self.get_application_config())
+            # print(os.path.join(self.user_data_dir, self.ini_file))
+            # self.config.read(os.path.join(self.user_data_dir, self.ini_file))
+            self.config.read('midiclock.ini')
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
 
