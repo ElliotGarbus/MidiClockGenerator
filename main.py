@@ -134,7 +134,6 @@ if __name__ == '__main__':
         midi_ports = ListProperty([])
         mcg = MidiClockGen()
         panel_led = BooleanProperty(False)
-        ini_file = 'midiclock.ini'
 
         def flash_led_off(self, dt):
             self.panel_led = self.root.ids.bpm_slider.value >= 667
