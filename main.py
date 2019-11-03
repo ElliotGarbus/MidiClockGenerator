@@ -54,7 +54,7 @@ if __name__ == '__main__':
     from kivy.uix.textinput import TextInput
     from kivy.uix.spinner import Spinner
     from kivy.uix.button import Button
-
+    import os.path
     set_start_method('spawn')
 
     class IntegerInput(TextInput):
@@ -133,7 +133,7 @@ if __name__ == '__main__':
         midi_ports = ListProperty([])
         mcg = MidiClockGen()
         panel_led = BooleanProperty(False)
-        # use_kivy_settings = False
+        ini_file = 'midiclock.ini'
 
         def flash_led_off(self, dt):
             self.panel_led = self.root.ids.bpm_slider.value >= 667
@@ -159,7 +159,7 @@ if __name__ == '__main__':
             self.icon = 'quarter note.png'
             Window.minimum_width = window_width
             Window.minimum_height = window_height
-            self.config.read('midiclock.ini')
+            self.config.read(os.path.join(self.user_data_dir, self.ini_file))
             self.use_kivy_settings = False
             Window.bind(on_request_close=self.window_request_close)
 
