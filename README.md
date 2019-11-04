@@ -1,5 +1,7 @@
 # MidiClockGenerator
-This is a simple MIDI clock generator
+Download here: https://github.com/ElliotGarbus/MidiClockGenerator/releases
+
+This is a simple MIDI clock generator.  It can generate midi beat clock between 47 and 6000 BPM
 
 Directions:
 * Select the midi connection
