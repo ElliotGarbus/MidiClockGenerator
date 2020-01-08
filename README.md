@@ -28,7 +28,7 @@ The midi clock spec bases BPM on quater notes, and sends 24 messages per quater 
             while (t2 - t1) < pulse_rate:
                 t2 = perf_counter()
 
-out_port is a string that specified the midi port. The parameters run and bpm are instances of multiprocessing Vaule.  These are shared variables across both processes.  The variable bpm.value is used to send the desired bmp from the GUI to the \_midi_clock_generator.  Pulse rate is calculated in the while loop, so no additional action is reuqired when the bpm.value is changed.  run is used for the GUI process to stop the \_midi_clock_generator prior to shutting down the process.
+out_port is a string that specified the midi port. The parameters run and bpm are instances of multiprocessing Vaule.  These are shared variables across both processes.  The variable bpm.value is used to send the desired bpm from the GUI to the \_midi_clock_generator.  Pulse rate is calculated in the while loop, so no additional action is reuqired when the bpm.value is changed.  run is used for the GUI process to stop the \_midi_clock_generator prior to shutting down the process.
 The mido library is used for the midi connection.
 
 \_\_name\_\_ will get a differnt name in the process that is created by the program (\_\_mp_main\_\_).  The test "if \_\_name__ == '\_\_main\_\_':"
