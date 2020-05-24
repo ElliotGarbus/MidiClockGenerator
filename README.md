@@ -6,14 +6,14 @@ This is a simple MIDI clock generator.  It can generate midi beat clock between 
 Directions:
 * Select the midi connection
 * Use the Slider, Tap, or input the Beats per Minute
-* The Range control selects differnt ranges for the slider
+* The Range control selects different ranges for the slider
 
 Developer notes:
-Most of the code of interst in is main.py.  The program uses multi-processing to run the GUI in one process, and the midi clock generator in another process.
+Most of the code of interest in is main.py.  The program uses multi-processing to run the GUI in one process, and the midi clock generator in another process.
 The method, _midi_clock_generator, of the class MidiClockGen, has a sleep command in the inner loop.  This is used to save power for most of the time between beats.
 At beats of 3000 BPM or above sleep() is not used.
 
-The midi clock spec bases BPM on quater notes, and sends 24 messages per quater note.
+The midi clock spec bases BPM on quarter notes, and sends 24 messages per quarter note.
 
     def _midi_clock_generator(out_port, bpm, run):
         midi_output = mido.open_output(out_port)
@@ -28,11 +28,11 @@ The midi clock spec bases BPM on quater notes, and sends 24 messages per quater 
             while (t2 - t1) < pulse_rate:
                 t2 = perf_counter()
 
-out_port is a string that specified the midi port. The parameters run and bpm are instances of multiprocessing Vaule.  These are shared variables across both processes.  The variable bpm.value is used to send the desired bpm from the GUI to the \_midi_clock_generator.  Pulse rate is calculated in the while loop, so no additional action is required when the bpm.value is changed.  run is used for the GUI process to stop the \_midi_clock_generator prior to shutting down the process.
+out_port is a string that specified the midi port. The parameters run and bpm are instances of multiprocessing Value.  These are shared variables across both processes.  The variable bpm.value is used to send the desired bpm from the GUI to the \_midi_clock_generator.  Pulse rate is calculated in the while loop, so no additional action is required when the bpm.value is changed.  run is used for the GUI process to stop the \_midi_clock_generator prior to shutting down the process.
 The mido library is used for the midi connection.
 
-\_\_name\_\_ will get a differnt name in the process that is created by the program (\_\_mp_main\_\_).  The test "if \_\_name__ == '\_\_main\_\_':"
-prevents the kiy code from being loaded in both procesess.  If this 'guard' is not in place, the app will create 2 windows.
+\_\_name\_\_ will get a different name in the process that is created by the program (\_\_mp_main\_\_).  The test "if \_\_name__ == '\_\_main\_\_':"
+prevents the kiy code from being loaded in both processes.  If this 'guard' is not in place, the app will create 2 windows.
 
 
 There are a few other files in the repository in '/dev tests' that are not part of the project, but were part of the development:
