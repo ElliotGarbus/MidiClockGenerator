@@ -21,7 +21,7 @@ window_left = 100
 
 # Use Python lib configparser to read .ini file prior to app startup
 parser = ConfigParser()
-found = parser.read('main.ini')  # created in main.py: build_config()
+found = parser.read('midiclock.ini')  # created in main.py: build_config()
 if found:
     Config.set('graphics', 'width', parser['Window']['width'])
     Config.set('graphics', 'height', parser['Window']['height'])
@@ -36,4 +36,5 @@ else:
     Config.set('graphics', 'left', window_left)
 Config.set('kivy', 'exit_on_escape', 0)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
+Config.set('kivy', 'window_icon','quarter note.png' )
 

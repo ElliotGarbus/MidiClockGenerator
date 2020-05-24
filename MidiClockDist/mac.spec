@@ -5,13 +5,13 @@ import os
 spec_root = os.path.abspath(SPECPATH)
 block_cipher = None
 app_name = 'MidiClock'
-mac_icon = '../qtr_blue.icns'
+mac_icon = '../images/qtr_blue.icns'
 
 
 a = Analysis(['../main.py'],
              pathex=[spec_root],
              binaries=[],
-             datas=[('../*.png', '.'),
+             datas=[('../images/*.png', './images'),
                     ('../*.kv', '.')],
              hiddenimports=[],
              hookspath=[],

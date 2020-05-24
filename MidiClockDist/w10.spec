@@ -6,11 +6,11 @@ from kivy_deps import sdl2, glew
 spec_root = os.path.abspath(SPECPATH)
 block_cipher = None
 app_name = 'MidiClock'
-win_icon = '../qtr_blue.ico'
+win_icon = '../images/qtr_blue.ico'
 
 a = Analysis(['../main.py'],
              pathex=[spec_root],
-             datas=[('../*.png', '.'), ('../*.kv', '.')],
+             datas=[('../images/*.png', './images'), ('../*.kv', '.')],
              hiddenimports=['win32timezone'],
              hookspath=[],
              runtime_hooks=[],
