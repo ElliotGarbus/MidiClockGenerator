@@ -36,5 +36,5 @@ else:
     Config.set('graphics', 'left', window_left)
 Config.set('kivy', 'exit_on_escape', 0)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-Config.set('kivy', 'window_icon','quarter note.png' )
+Config.set('kivy', 'window_icon','images/quarter note.png' )
 
