@@ -35,7 +35,7 @@ The mido library is used for the midi connection.
 prevents the kiy code from being loaded in both procesess.  If this 'guard' is not in place, the app will create 2 windows.
 
 
-There are a few other files in the respository that are not part of the project, but were part of the development:
+There are a few other files in the repository in '/dev tests' that are not part of the project, but were part of the development:
 * timer_resolution.py - Runs the timers from the time standard module back to back, and resports the results.
 * miditest.py - a simple test of multiprocessing using functions
 * miditestclass.py - a simple test of multiprocessing using a class
