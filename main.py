@@ -56,7 +56,7 @@ if __name__ == '__main__':
     from kivy.uix.button import Button
     from kivy.utils import platform
 
-    set_start_method('spawn') # required for mac prior to Python 3.8
+    set_start_method('spawn')  # required for mac prior to Python 3.8
 
     class IntegerInput(TextInput):
         def insert_text(self, substring, from_undo=False):
@@ -135,12 +135,12 @@ if __name__ == '__main__':
         mcg = MidiClockGen()
         panel_led = BooleanProperty(False)
 
-        def flash_led_off(self, dt):
+        def flash_led_off(self, _):
             self.panel_led = self.root.ids.bpm_slider.value >= 667
             rate = (60 / int(self.root.ids.bpm_slider.value)) * .75
             Clock.schedule_once(self.flash_led_on, rate)
 
-        def flash_led_on(self, dt):
+        def flash_led_on(self, _):
             self.panel_led = True
             rate = (60 / int(self.root.ids.bpm_slider.value)) * .25
             Clock.schedule_once(self.flash_led_off, rate)
@@ -157,7 +157,7 @@ if __name__ == '__main__':
         def get_application_config(self):
             if platform == 'win':
                 s = '%(appdir)s/%(appname)s.ini'
-            else: # mac will not write into app folder
+            else:  # mac will not write into app folder
                 s = '~/.%(appname)s.ini'
             return super().get_application_config(defaultpath=s)
 
